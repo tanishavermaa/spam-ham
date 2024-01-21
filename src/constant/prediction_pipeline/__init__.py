@@ -1,5 +1,5 @@
 import os
-from constant.training_pipeline import MODEL_FILE_NAME
+from src.constant.training_pipeline import MODEL_FILE_NAME
 from src.constant.s3_bucket import (PREDICTION_BUCKET_NAME,
                                        TRAINING_BUCKET_NAME)
 PRED_SCHEMA_FILE_PATH = os.path.join('config', 'prediction_schema.yml')
