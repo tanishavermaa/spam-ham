@@ -9,7 +9,9 @@ import sys
 import pandas as pd
 
 from src.constant.training_pipeline import *
-from src.ml.model.s3_estimator import SpamhamDetector
+
+from src.ml.model.s3_model import S3Model
+
 from dataclasses import dataclass
 from typing import Optional
 from src.entity.config_entity import Prediction_config
@@ -46,18 +48,19 @@ class ModelEvaluation:
             self.model_trainer_artifact = model_trainer_artifact
             self.data_transformation_artifact = data_transformation_artifact
             self.utils = MainUtils()
+            
+            self.s3_model = S3Model()
         except Exception as e:
             raise SpamhamException(e, sys) from e
 
-    def get_best_model(self) -> Optional[SpamhamDetector]:
+    def get_best_model(self):
         try:
-            bucket_name = self.model_eval_config.bucket_name
-            model_path = self.model_eval_config.s3_model_key_path
-            spamham_detector = SpamhamDetector(bucket_name=bucket_name,
-                                               model_path=model_path)
+                        
+            spamham_detector = self.s3_model.load_s3_model(model_dir=self.model_eval_config.best_model_dir)
 
-            if spamham_detector.is_model_present(model_path=model_path):
+            if spamham_detector:
                 return spamham_detector
+            
             return None
         except Exception as e:
             raise SpamhamException(e, sys)
