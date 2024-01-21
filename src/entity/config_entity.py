@@ -75,8 +75,10 @@ class ModelTrainerConfig:
 @dataclass
 class ModelEvaluationConfig:
     changed_threshold_score: float = MODEL_EVALUATION_CHANGED_THRESHOLD_SCORE
-    bucket_name: str = MODEL_PUSHER_BUCKET_NAME
-    s3_model_key_path: str = MODEL_FILE_NAME
+    model_eval_artifact_dir = os.path.join(training_pipeline_config.artifact_dir, MODEL_EVALUATION_DIR_NAME)
+    s3_model_key_path: str = MODEL_EVALUATION_BEST_MODEL_NAME
+    best_model_dir:str  = os.path.join(model_eval_artifact_dir, MODEL_EVALUATION_BEST_MODEL_DIR)
+
 
 
 @dataclass
@@ -90,9 +92,13 @@ class ModelPusherConfig:
 
 @dataclass
 class PredictionPipelineConfig:
+    prediction_artifact_folder: str = os.path.join(prediction_pipeline.PREDICTION_ARTIFACT_FOLDER_NAME)
+                                                   
     data_bucket_name: str = prediction_pipeline.PREDICTION_DATA_BUCKET
     data_file_path: str = prediction_pipeline.PREDICTION_INPUT_FILE_NAME
-    model_file_name: str = MODEL_FILE_NAME
+    model_storing_dir: str = os.path.join(prediction_artifact_folder,
+                                        prediction_pipeline.MODEL_STORING_DIR_NAME ) 
+        
     model_bucket_name: str = prediction_pipeline.MODEL_BUCKET_NAME
     output_file_name: str = prediction_pipeline.PREDICTION_OUTPUT_FILE_NAME
 
