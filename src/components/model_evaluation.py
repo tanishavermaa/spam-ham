@@ -7,6 +7,7 @@ from src.logger import logging
 
 import sys
 import pandas as pd
+import numpy as np
 
 from src.constant.training_pipeline import *
 
@@ -67,10 +68,10 @@ class ModelEvaluation:
 
     def evaluate_model(self) -> EvaluateModelResponse:
         try:
-            test_df = pd.read_csv(self.data_ingestion_artifact.test_file_path)
+            test_df = np.load(self.data_transformation_artifact.transformed_test_file_path)
             # x_test = pd.read_csv(self.data_ingestion_artifact.test_file_path)
             
-            x_test, y_test = test_df[FEATURE_COLUMN],test_df[[TARGET_COLUMN]]
+            x_test, y_test = test_df[:, 0],test_df[:, 1]
            
 
           
