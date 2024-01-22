@@ -14,7 +14,7 @@ from src.constant.training_pipeline import MODEL_FILE_NAME
 class S3Model:
 
     def __init__(self) -> None:
-        self.s3_sync = S3Sync
+        self.s3_sync = S3Sync()
         self.utils = MainUtils()
     
     def is_bucket_empty(self) -> bool:
