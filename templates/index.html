@@ -13,12 +13,12 @@
   <form>
 
     
-    <button id = "training" onclick="myFunction"  href="/train">
+    <button id="training" onclick="myFunction()">Start Training</button>
+
       <span></span>
       <span></span>
       <span></span>
       <span></span>
-       Train Model
     </button>
 
     <!-- <button         onclick="window.open('/predict'), '_self' " > -->
@@ -42,8 +42,10 @@
 <script>
   function myFunction() {
     document.getElementById("training").innerHTML = "Prediction started";
+    // Add the following line to navigate to the specified URL
+    window.location.href = "/train";
   }
-  </script>
+</script>
   
 </body>
 </html>
