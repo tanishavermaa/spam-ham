@@ -82,19 +82,11 @@ class ModelEvaluation:
 
     def evaluate_model(self) -> EvaluateModelResponse:
         try:
-<<<<<<< HEAD
-            test_arr = np.load(self.data_transformation_artifact.transformed_test_file_path)
-            # x_test = pd.read_csv(self.data_ingestion_artifact.test_file_path)
-            
-            x_test, y_test = test_arr[:, :-1] , test_arr[:, -1]
-           
-=======
             x_test, y_test = self.generate_test_data()
             
           
->>>>>>> 73fedd4aa8a26de2f5444430f6e819dce608ea0d
             trained_model = self.utils.load_object(file_path=self.model_trainer_artifact.trained_model_file_path)
-            # y.replace(TargetValueMapping().to_dict(), inplace=True)
+
             y_hat_trained_model = trained_model.predict(x_test)
 
             trained_model_f1_score = f1_score(y_test, y_hat_trained_model)
