@@ -63,18 +63,17 @@ class ModelEvaluation:
                 return spamham_detector
             
             return None
+        
         except Exception as e:
             raise SpamhamException(e, sys)
 
     def evaluate_model(self) -> EvaluateModelResponse:
         try:
-            test_df = np.load(self.data_transformation_artifact.transformed_test_file_path)
+            test_arr = np.load(self.data_transformation_artifact.transformed_test_file_path)
             # x_test = pd.read_csv(self.data_ingestion_artifact.test_file_path)
             
-            x_test, y_test = test_df[:, 0],test_df[:, 1]
+            x_test, y_test = test_arr[:, :-1] , test_arr[:, -1]
            
-
-          
             trained_model = self.utils.load_object(file_path=self.model_trainer_artifact.trained_model_file_path)
             # y.replace(TargetValueMapping().to_dict(), inplace=True)
             y_hat_trained_model = trained_model.predict(x_test)

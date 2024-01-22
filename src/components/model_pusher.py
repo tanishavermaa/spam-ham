@@ -39,5 +39,6 @@ class ModelPusher:
             logging.info(f"Model pusher artifact: [{model_pusher_artifact}]")
             logging.info("Exited initiate_model_pusher method of ModelTrainer class")
             return model_pusher_artifact
+        
         except Exception as e:
             raise SpamhamException(e, sys) from e
