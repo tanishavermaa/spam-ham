@@ -65,15 +65,24 @@ class ModelEvaluation:
             return None
         except Exception as e:
             raise SpamhamException(e, sys)
+        
+    def generate_test_data(self):
+        try:
+            test_array = load_numpy_array_data(file_path=self.data_transformation_artifact.transformed_test_file_path)
+            test_df = pd.read_csv(self.data_ingestion_artifact.test_file_path)
+            
+            _, y_test = test_array[:, :-1], test_array[:, -1]
+            
+            x_test = test_df[FEATURE_COLUMN]
+            
+            return x_test, y_test
+        except Exception as e:
+            raise SpamhamException(e, sys)
 
     def evaluate_model(self) -> EvaluateModelResponse:
         try:
-            test_df = np.load(self.data_transformation_artifact.transformed_test_file_path)
-            # x_test = pd.read_csv(self.data_ingestion_artifact.test_file_path)
+            x_test, y_test = self.generate_test_data()
             
-            x_test, y_test = test_df[:, 0],test_df[:, 1]
-           
-
           
             trained_model = self.utils.load_object(file_path=self.model_trainer_artifact.trained_model_file_path)
             # y.replace(TargetValueMapping().to_dict(), inplace=True)
